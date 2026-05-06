@@ -21,7 +21,7 @@
                  style="ring-color: #B1C97A">
               <div class="w-full h-full flex items-center justify-center"
                    style="background: #B1C97A">
-              <img src="@/assets/images/Leyin1.jpg" alt="新郎 Leyin" class="w-full h-full object-cover" style="transform: rotate(-25deg); transform-origin: center;" />
+              <img src="@/assets/images/leyin1.jpg" alt="新郎 Leyin" class="w-full h-full object-cover" style="transform: rotate(-25deg); transform-origin: center;" />
               </div>
             </div>
             <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-sm"
