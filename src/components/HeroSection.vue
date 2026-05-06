@@ -55,9 +55,9 @@
         data-aos-delay="280"
         class="flex items-center justify-center gap-3 my-6"
       >
-        <span class="block h-px w-20 opacity-60" style="background:#D4B87A"></span>
+        <!-- <span class="block h-px w-20 opacity-60" style="background:#D4B87A"></span> -->
         <span class="text-lg" style="color:#D4B87A">✦</span>
-        <span class="block h-px w-20 opacity-60" style="background:#D4B87A"></span>
+        <!-- <span class="block h-px w-20 opacity-60" style="background:#D4B87A"></span> -->
       </div>
 
       <p

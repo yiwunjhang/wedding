@@ -45,12 +45,13 @@
               </div>
             </div>
             <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-sm"
-                 style="background:#B1C97A">新娘</div>
+                 style="background:#D4B87A">新娘</div>
           </div>
           <h3 class="font-serif text-2xl mt-6 mb-2" style="color:#B1C97A">Risa（怡雯）</h3>
           <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
-            熱愛花藝與烹飪，用雙手為生活增添美麗與溫度。
-            她的笑容是整個房間最亮的光。
+            一位熱愛畫畫的軟體工程師，喜歡用色彩繽紛的畫筆描繪生活的美好。<br/>
+            座右銘是「Enjoy every moment as it comes.」<br/>
+            最近開始創作狐狸先生與小沙鼠的系列作品
           </p>
         </div>
       </div>
