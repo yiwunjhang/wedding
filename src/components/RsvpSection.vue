@@ -20,7 +20,8 @@
         class="bg-white rounded-3xl shadow-xl overflow-hidden border border-pink-50">
         <iframe
           src="https://docs.google.com/forms/d/e/1FAIpQLSeuLwkJ6mtE6z8oPNwotobxcmqq-GUOFHbDHzxEq7ABqolbeA/viewform?embedded=true"
-          width="100%" height="1200" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"
+          class="rsvp-iframe"
+          width="100%" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"
           style="display:block; overflow:hidden">
           載入中…
         </iframe>
@@ -58,7 +59,8 @@
           <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-pink-50">
             <iframe
               src="https://docs.google.com/forms/d/e/1FAIpQLSc2Z7Rj8WxEDgWUmZFc_H02gPv4hBNeuFW_4NAvs695kWNzvg/viewform?embedded=true"
-              width="100%" height="438" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"
+              class="rsvp-iframe"
+              width="100%" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"
               style="display:block; overflow:hidden">
               載入中…
             </iframe>
@@ -74,3 +76,14 @@ import { ref } from 'vue'
 
 const contactOpen = ref(false)
 </script>
+
+<style scoped>
+.rsvp-iframe {
+  height: 1400px;
+}
+@media (min-width: 768px) {
+  .rsvp-iframe {
+    height: 1200px;
+  }
+}
+</style>
