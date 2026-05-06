@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative overflow-hidden py-16" style="background: #eef4e6">
+  <footer id="footer" class="relative overflow-hidden py-16" style="background: #eef4e6">
     <!-- Decorative top border -->
     <div class="absolute top-0 left-0 right-0 h-1" style="background: #b1c97a"></div>
 

@@ -9,6 +9,7 @@ import RsvpSection from './components/RsvpSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import ScrollToTop from './components/ScrollToTop.vue'
 import BackgroundMusic from './components/BackgroundMusic.vue'
+import SectionProgress from './components/SectionProgress.vue'
 
 onMounted(() => {
   AOS.init({
@@ -32,5 +33,6 @@ onMounted(() => {
     <FooterSection />
     <ScrollToTop />
     <BackgroundMusic />
+    <SectionProgress />
   </div>
 </template>
