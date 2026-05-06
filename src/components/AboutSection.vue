@@ -1,0 +1,128 @@
+<template>
+  <section id="about" class="py-24 overflow-hidden bg-hero-pattern" style="background-color: #FDFAF4">
+    <div class="max-w-6xl mx-auto px-6">
+      <!-- Section Header -->
+      <div data-aos="fade-up">
+        <h2 class="section-title font-serif">我們的故事</h2>
+        <p class="section-subtitle">OUR STORY</p>
+        <div class="flex items-center justify-center gap-3 mb-16">
+          <span class="block h-px w-16 opacity-40" style="background:#D4B87A"></span>
+          <span style="color:#D4B87A">✦</span>
+          <span class="block h-px w-16 opacity-40" style="background:#D4B87A"></span>
+        </div>
+      </div>
+
+      <!-- Couple intro -->
+      <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+        <!-- Groom -->
+        <div data-aos="fade-right" data-aos-duration="900" class="text-center">
+          <div class="relative inline-block mb-6">
+            <div class="w-48 h-48 mx-auto rounded-full overflow-hidden shadow-xl ring-4 ring-offset-4"
+                 style="ring-color: #B1C97A">
+              <div class="w-full h-full flex items-center justify-center"
+                   style="background: #B1C97A">
+                <UserIcon class="w-20 h-20 text-white" />
+              </div>
+            </div>
+            <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-sm"
+                 style="background:#D4B87A">新郎</div>
+          </div>
+          <h3 class="font-serif text-2xl mt-6 mb-2" style="color:#B1C97A">Leyin（宗毅）</h3>
+          <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+            熱愛攝影與旅行，在一次偶然的相遇中，找到了他一生的另一半。
+            每一張照片都藏著他對生活的熱忱。
+          </p>
+        </div>
+
+        <!-- Bride -->
+        <div data-aos="fade-left" data-aos-duration="900" class="text-center">
+          <div class="relative inline-block mb-6">
+            <div class="w-48 h-48 mx-auto rounded-full overflow-hidden shadow-xl ring-4 ring-offset-4"
+                 style="ring-color: #D4B87A">
+              <div class="w-full h-full flex items-center justify-center"
+                   style="background: #B1C97A">
+                <UserIcon class="w-20 h-20 text-white" />
+              </div>
+            </div>
+            <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-sm"
+                 style="background:#B1C97A">新娘</div>
+          </div>
+          <h3 class="font-serif text-2xl mt-6 mb-2" style="color:#B1C97A">Risa（怡雯）</h3>
+          <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
+            熱愛花藝與烹飪，用雙手為生活增添美麗與溫度。
+            她的笑容是整個房間最亮的光。
+          </p>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div data-aos="fade-up" class="mb-8">
+        <h3 class="font-serif text-2xl text-center mb-10" style="color:#6E8F3C">相遇的足跡</h3>
+      </div>
+
+      <div class="relative">
+        <!-- Center line -->
+        <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 hidden md:block"
+             style="background: #D4B87A"></div>
+
+        <div v-for="(event, i) in timeline" :key="i"
+             :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
+             :data-aos-delay="i * 100"
+             class="relative flex md:items-center mb-10 md:mb-16"
+             :class="i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'"
+        >
+          <!-- Content -->
+          <div class="md:w-5/12 bg-white rounded-2xl shadow-md p-6 border border-gray-100"
+               :class="i % 2 === 0 ? 'md:mr-auto md:pr-12' : 'md:ml-auto md:pl-12'"
+          >
+            <p class="text-xs tracking-widest font-medium mb-1" style="color:#D4B87A">{{ event.year }}</p>
+            <h4 class="font-serif text-lg mb-2" style="color:#6E8F3C">{{ event.title }}</h4>
+            <p class="text-sm text-gray-500 leading-relaxed">{{ event.desc }}</p>
+          </div>
+          <!-- Dot -->
+          <div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center w-10 h-10 rounded-full shadow"
+               style="background: #B1C97A">
+            <component :is="event.icon" class="w-5 h-5 text-white" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { UserIcon, SparklesIcon, HeartIcon, PaperAirplaneIcon, StarIcon } from '@heroicons/vue/24/outline'
+
+const timeline = [
+  {
+    year: '2020 · 秋',
+    title: '初次相遇',
+    desc: '在朋友的聚會上，兩人因一個玩笑話相識，開啟了彼此的緣份。',
+    icon: SparklesIcon,
+  },
+  {
+    year: '2021 · 春',
+    title: '第一次約會',
+    desc: '一起走過台北街頭，手牽手看了場電影，從此世界再也不一樣。',
+    icon: HeartIcon,
+  },
+  {
+    year: '2022 · 夏',
+    title: '共同旅行',
+    desc: '第一次一起出國，在京都的小巷裡，宗毅輕輕牽起怡雯的手。',
+    icon: PaperAirplaneIcon,
+  },
+  {
+    year: '2025 · 冬',
+    title: '求婚',
+    desc: '在初雪的夜晚，宗毅單膝跪地，怡雯含淚說了「我願意」。',
+    icon: StarIcon,
+  },
+  {
+    year: '2027 · 春',
+    title: '永結同心',
+    desc: '在所有親愛的人見證下，我們將攜手走向人生最美的篇章。',
+    icon: SparklesIcon,
+  },
+]
+</script>
