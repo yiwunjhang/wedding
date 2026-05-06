@@ -60,14 +60,14 @@
            style="background: rgba(177,201,122,0.15); border-color: #B1C97A">
         <EnvelopeIcon class="w-5 h-5" style="color:#6E8F3C" />
         <span class="text-sm" style="color:#4A6B28">
-          敬請回覆出席 · 截止日期：2027 年 3 月 13 日
+          敬請回覆出席 · 截止日期：2026 年 12 月 31 日
         </span>
       </div>
 
       <!-- Copyright -->
       <div data-aos="fade-up" data-aos-delay="600" class="border-t pt-8 mt-4" style="border-color: rgba(0,0,0,0.08)">
         <p class="text-xs text-gray-400">
-          © 2027 Leyin &amp; Risa Wedding · Made with ❤️
+          © 2027 Leyin &amp; Risa Wedding.
         </p>
       </div>
     </div>

@@ -10,7 +10,7 @@
     ></div>
 
     <!-- Base overlay for text readability -->
-    <div class="absolute inset-0" style="background: rgba(28,42,24,0.28)"></div>
+    <div class="absolute inset-0" style="background: rgba(28,42,24,0.1)"></div>
 
     <!-- Frosted glass layer — intensifies on scroll -->
     <div
@@ -100,7 +100,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import heroBg from '../assets/images/A7401450_3.png'
+import heroBg from '../assets/images/A7401450.png'
 
 const weddingDate = new Date('2027-03-27T18:00:00')
 const countdown = ref([
