@@ -140,6 +140,13 @@ function handleScroll() {
   scrollY.value = window.scrollY
 }
 
+function dismissLoading() {
+  const el = document.getElementById('loading')
+  if (!el) return
+  el.classList.add('done')
+  el.addEventListener('transitionend', () => el.remove(), { once: true })
+}
+
 let timer
 onMounted(() => {
   const hero = document.getElementById('hero')
@@ -147,6 +154,16 @@ onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
   updateCountdown()
   timer = setInterval(updateCountdown, 1000)
+
+  const img = new Image()
+  img.src = heroBg
+  if (img.complete) {
+    dismissLoading()
+  } else {
+    img.onload = dismissLoading
+    img.onerror = dismissLoading
+    setTimeout(dismissLoading, 8000)
+  }
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)

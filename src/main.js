@@ -2,10 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+history.scrollRestoration = 'manual'
+window.scrollTo(0, 0)
 
-const loading = document.getElementById('loading')
-if (loading) {
-  loading.classList.add('done')
-  loading.addEventListener('transitionend', () => loading.remove(), { once: true })
-}
+createApp(App).mount('#app')
