@@ -8,6 +8,7 @@ import MapSection from './components/MapSection.vue'
 import RsvpSection from './components/RsvpSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import ScrollToTop from './components/ScrollToTop.vue'
+import BackgroundMusic from './components/BackgroundMusic.vue'
 
 onMounted(() => {
   AOS.init({
@@ -30,5 +31,6 @@ onMounted(() => {
     </main>
     <FooterSection />
     <ScrollToTop />
+    <BackgroundMusic />
   </div>
 </template>
