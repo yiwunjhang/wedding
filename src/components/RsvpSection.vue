@@ -11,7 +11,7 @@
           <span class="block h-px w-16 opacity-40" style="background:#D4B87A"></span>
         </div>
         <p class="text-center text-gray-500 text-sm mb-12 leading-relaxed">
-          請於 2027 年 3 月 13 日前回覆，<br>以便我們提前準備，感謝您的配合。
+          請於 2026 年 12 月 31 日前回覆，<br>以便我們提前準備，感謝您的配合。
         </p>
       </div>
 

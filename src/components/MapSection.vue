@@ -71,7 +71,7 @@
             </div>
             <div>
               <p class="font-medium text-gray-700 mb-1">{{ t.method }}</p>
-              <p class="text-sm text-gray-500 leading-relaxed">{{ t.desc }}</p>
+              <p class="text-sm text-gray-500 leading-relaxed whitespace-pre-line">{{ t.desc }}</p>
             </div>
           </div>
         </div>
@@ -94,40 +94,40 @@ const infos = [
   {
     icon: CalendarDaysIcon,
     title: '婚禮日期',
-    content: '2027 年 3 月 27 日（週六）\n晚宴：18:00 入場',
+    content: '2027 年 3 月 27 日（週六）\n晚宴：18:00',
   },
   {
     icon: HomeModernIcon,
     title: '婚禮場地',
-    content: '黃埔新村\n830高雄市鳳山區\n西四巷41號',
+    content: '黃埔新村\n830高雄市鳳山區西四巷41號',
   },
   {
     icon: ClockIcon,
     title: '宴客資訊',
-    content: '晚宴時間：18:00\n入場時間：17:30 起\n敬請準時蒞臨',
+    content: '晚宴時間：18:00\n入場時間：17:30\n敬請準時蒞臨',
   },
 ]
 
 const transport = [
   {
     icon: MapPinIcon,
-    method: '捷運',
-    desc: '搭乘高雄捷運橘線至鳳山西站，出站後步行約 10 分鐘。',
-  },
-  {
-    icon: TruckIcon,
-    method: '自行開車',
-    desc: '國道1號鳳山交流道下，沿光遠路往鳳山市區，約 5 分鐘車程，附近有路邊停車位。',
+    method: '捷運＋步行',
+    desc: '大東站(O13) 1號出口：穿越大東文化藝術中心，沿鳳山溪步道向南步行，約15分鐘。\n鳳山站(O12) 1號出口：轉乘公車或騎YouBike前往。',
   },
   {
     icon: TruckIcon,
     method: '公車',
-    desc: '搭乘高雄市公車至「鳳山」或「鳳山火車站」站，再步行約 10 分鐘。',
+    desc: '去程從捷運鳳山站搭乘 17:19 橘11A公車，17:36 至「黃埔新村站」下車，車程約17分鐘。\n 回程末班車：21:28 搭乘至高雄客運鳳山站(澄瀾砲台)再步行至捷運站。',
   },
   {
     icon: PhoneIcon,
-    method: 'Uber / 計程車',
-    desc: '請告知司機「黃埔新村」或輸入地址「鳳山區西四巷41號」導航前往。',
+    method: 'YouBike',
+    desc: '捷運站旁均有站點，騎行至「黃埔新村」站點（維武路）約5分鐘。',
+  },
+  {
+    icon: TruckIcon,
+    method: '自行開車',
+    desc: '導航設「黃埔新村」。\n現場有兩個停車場分別是「黃埔新村停車場」與「宜舍鳳山黃埔新村二停車場」，建議提早抵達以確保有位子停車。',
   },
 ]
 </script>
