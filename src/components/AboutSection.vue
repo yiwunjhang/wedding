@@ -71,12 +71,17 @@
              :class="i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'"
         >
           <!-- Content -->
-          <div class="md:w-5/12 bg-white rounded-2xl shadow-md p-6 border border-gray-100"
+          <div class="md:w-5/12 bg-white rounded-2xl shadow-md p-6 border border-gray-100 cursor-pointer hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
                :class="i % 2 === 0 ? 'md:mr-auto md:pr-12' : 'md:ml-auto md:pl-12'"
+               @click="openLightbox(event)"
           >
             <p class="text-xs tracking-widest font-medium mb-1" style="color:#D4B87A">{{ event.year }}</p>
             <h4 class="font-serif text-lg mb-2" style="color:#6E8F3C">{{ event.title }}</h4>
             <p class="text-sm text-gray-500 leading-relaxed">{{ event.desc }}</p>
+            <p class="text-xs mt-3 flex items-center gap-1" style="color:#B1C97A">
+              <PhotoIcon class="w-3.5 h-3.5" />
+              {{ event.photos?.length ? `${event.photos.length} 張照片` : '查看相片' }}
+            </p>
           </div>
           <!-- Dot -->
           <div class="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center w-10 h-10 rounded-full shadow"
@@ -86,11 +91,27 @@
         </div>
       </div>
     </div>
+
+    <TimelineLightbox
+      :visible="lightboxVisible"
+      :event="activeEvent"
+      @close="lightboxVisible = false"
+    />
   </section>
 </template>
 
 <script setup>
-import { UserIcon, SparklesIcon, HeartIcon, PaperAirplaneIcon, StarIcon } from '@heroicons/vue/24/outline'
+import { ref } from 'vue'
+import { SparklesIcon, HeartIcon, PaperAirplaneIcon, StarIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+import TimelineLightbox from './TimelineLightbox.vue'
+
+const lightboxVisible = ref(false)
+const activeEvent = ref(null)
+
+function openLightbox(event) {
+  activeEvent.value = event
+  lightboxVisible.value = true
+}
 
 const timeline = [
   {
@@ -98,30 +119,35 @@ const timeline = [
     title: '初次相遇',
     desc: '在朋友的聚會上，兩人因一個玩笑話相識，開啟了彼此的緣份。',
     icon: SparklesIcon,
+    photos: [],
   },
   {
     year: '2021 · 春',
     title: '第一次約會',
     desc: '一起走過台北街頭，手牽手看了場電影，從此世界再也不一樣。',
     icon: HeartIcon,
+    photos: [],
   },
   {
     year: '2022 · 夏',
     title: '共同旅行',
     desc: '第一次一起出國，在京都的小巷裡，宗毅輕輕牽起怡雯的手。',
     icon: PaperAirplaneIcon,
+    photos: [],
   },
   {
     year: '2025 · 冬',
     title: '求婚',
     desc: '在初雪的夜晚，宗毅單膝跪地，怡雯含淚說了「我願意」。',
     icon: StarIcon,
+    photos: [],
   },
   {
     year: '2027 · 春',
     title: '永結同心',
     desc: '在所有親愛的人見證下，我們將攜手走向人生最美的篇章。',
     icon: SparklesIcon,
+    photos: [],
   },
 ]
 </script>
