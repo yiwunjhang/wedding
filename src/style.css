@@ -5,9 +5,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FDFAF4;
+}
+::-webkit-scrollbar-thumb {
+  background: #D4B87A;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6E8F3C;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    scrollbar-color: #D4B87A #FDFAF4;
+    scrollbar-width: auto;
   }
   body {
     @apply font-sans text-gray-700 bg-white m-0;
