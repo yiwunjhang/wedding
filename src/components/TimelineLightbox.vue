@@ -7,7 +7,7 @@
         @click.self="close"
       >
         <!-- Overlay -->
-        <div class="absolute inset-0" style="background: rgba(253,250,244,0.93); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px)" @click="close" />
+        <div class="absolute inset-0" style="background: rgba(253,250,244,0.2); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px)" @click="close" />
 
         <!-- Panel -->
         <div class="panel relative z-10 w-full max-w-2xl mx-4">

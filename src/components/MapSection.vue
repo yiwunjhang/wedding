@@ -67,7 +67,8 @@
           <div v-for="(t, i) in transport" :key="i" class="flex items-start gap-4">
             <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
                  style="background: #F5EFE6">
-              <component :is="t.icon" class="w-5 h-5" style="color:#6E8F3C" />
+              <img v-if="typeof t.icon === 'string'" :src="t.icon" class="w-5 h-5" style="filter: invert(45%) sepia(40%) saturate(500%) hue-rotate(60deg)" />
+              <component v-else :is="t.icon" class="w-5 h-5" style="color:#6E8F3C" />
             </div>
             <div>
               <p class="font-medium text-gray-700 mb-1">{{ t.method }}</p>
@@ -86,9 +87,11 @@ import {
   HomeModernIcon,
   ClockIcon,
   MapPinIcon,
-  TruckIcon,
-  PhoneIcon,
 } from '@heroicons/vue/24/outline'
+import truckSvg from '@/assets/images/truck-front.svg'
+import busSvg from '@/assets/images/bus-front.svg'
+import bicycleSvg from '@/assets/images/bicycle.svg'
+import carSvg from '@/assets/images/car-front.svg'
 
 const infos = [
   {
@@ -110,22 +113,22 @@ const infos = [
 
 const transport = [
   {
-    icon: MapPinIcon,
+    icon: truckSvg,
     method: '捷運＋步行',
     desc: '大東站(O13) 1號出口：穿越大東文化藝術中心，沿鳳山溪步道向南步行，約15分鐘。\n鳳山站(O12) 1號出口：轉乘公車或騎YouBike前往。',
   },
   {
-    icon: TruckIcon,
+    icon: busSvg,
     method: '公車',
     desc: '去程從捷運鳳山站搭乘 17:19 橘11A公車，17:36 至「黃埔新村站」下車，車程約17分鐘。\n 回程末班車：21:28 搭乘至高雄客運鳳山站(澄瀾砲台)再步行至捷運站。',
   },
   {
-    icon: PhoneIcon,
+    icon: bicycleSvg,
     method: 'YouBike',
     desc: '捷運站旁均有站點，騎行至「黃埔新村」站點（維武路）約5分鐘。',
   },
   {
-    icon: TruckIcon,
+    icon: carSvg,
     method: '自行開車',
     desc: '導航設「黃埔新村」。\n現場有兩個停車場分別是「黃埔新村停車場」與「宜舍鳳山黃埔新村二停車場」，建議提早抵達以確保有位子停車。',
   },
