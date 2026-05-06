@@ -15,33 +15,23 @@
     </button>
   </div>
 
-  <iframe
-    ref="ytPlayer"
-    src="https://www.youtube.com/embed/Ae6YLY1b4IA?enablejsapi=1&loop=1&playlist=Ae6YLY1b4IA"
-    allow="autoplay"
-    style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;bottom:0;right:0;"
-  />
+  <audio ref="audio" loop :src="musicSrc" />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { MusicalNoteIcon, PauseIcon } from '@heroicons/vue/24/outline'
+import musicSrc from '@/assets/music/Japanese R&B.mp3'
 
 const isPlaying = ref(false)
-const ytPlayer = ref(null)
-
-function send(func) {
-  ytPlayer.value?.contentWindow.postMessage(
-    JSON.stringify({ event: 'command', func, args: [] }),
-    '*'
-  )
-}
+const audio = ref(null)
 
 function togglePlay() {
+  if (!audio.value) return
   if (isPlaying.value) {
-    send('pauseVideo')
+    audio.value.pause()
   } else {
-    send('playVideo')
+    audio.value.play()
   }
   isPlaying.value = !isPlaying.value
 }
