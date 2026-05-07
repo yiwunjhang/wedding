@@ -29,8 +29,10 @@
           </div>
           <h3 class="font-serif text-2xl mt-6 mb-2" style="color:#B1C97A">Leyin（宗毅）</h3>
           <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
-            熱愛攝影與旅行，在一次偶然的相遇中，找到了他一生的另一半。
-            每一張照片都藏著他對生活的熱忱。
+            熱愛攝影與旅行<br/>
+            習慣用工程人的理性規劃人生<br/>
+            用攝影人的角度體驗生活<br/>
+            每一張照片都藏著對生活的熱忱
           </p>
         </div>
 
