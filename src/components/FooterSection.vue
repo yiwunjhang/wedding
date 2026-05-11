@@ -50,6 +50,18 @@
         
       </div>
 
+      <!-- LINE QR Code -->
+      <div data-aos="fade-up" data-aos-delay="350" class="flex flex-col items-center gap-3 mb-10">
+        <p class="text-xs tracking-widest" style="color:#b1c97a">掃描 QRCode 加入我們官方 LINE</p>
+        <div class="p-3 rounded-2xl shadow-md bg-white inline-block">
+          <img
+            src="https://qr-official.line.me/gs/M_948acusc_BW.png?oat_content=qr"
+            alt="LINE QR Code"
+            class="w-32 h-32"
+          />
+        </div>
+      </div>
+
       <!-- Quick Links -->
       <div
         data-aos="fade-up"
