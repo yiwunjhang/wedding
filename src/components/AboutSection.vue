@@ -79,7 +79,7 @@
           >
             <p class="text-xs tracking-widest font-medium mb-1" style="color:#D4B87A">{{ event.year }}</p>
             <h4 class="font-serif text-lg mb-2" style="color:#6E8F3C">{{ event.title }}</h4>
-            <p class="text-sm text-gray-500 leading-relaxed">{{ event.desc }}</p>
+            <p class="text-sm text-gray-500 leading-relaxed whitespace-pre-line">{{ event.desc }}</p>
             <p class="text-xs mt-3 flex items-center gap-1" style="color:#B1C97A">
               <PhotoIcon class="w-3.5 h-3.5" />
               {{ event.photos?.length ? `${event.photos.length} 張照片` : '查看相片' }}
