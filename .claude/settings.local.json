@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(mkdir -p \"d:/Azure DevOps/wedding/src/views\")"
+    ],
+    "additionalDirectories": [
+      "d:\\Azure DevOps\\wedding\\src"
+    ]
+  }
+}

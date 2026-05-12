@@ -1,5 +1,5 @@
 <template>
-  <section class="py-20 overflow-hidden" style="background-color: #fbfdf4">
+  <section id="moments" class="py-20 overflow-hidden" style="background-color: #fbfdf4">
     <div class="max-w-6xl mx-auto px-6">
 
       <!-- Header -->
@@ -14,12 +14,12 @@
       </div>
 
       <!-- Tabs -->
-      <div data-aos="fade-up" data-aos-delay="50" class="flex justify-center gap-3 mb-10 flex-wrap">
+      <div data-aos="fade-up" data-aos-delay="50" class="flex flex-col md:flex-row justify-center gap-3 mb-10">
         <button
           v-for="(group, i) in groups"
           :key="i"
           @click="switchGroup(i)"
-          class="px-6 py-2.5 rounded-full text-sm font-medium tracking-wide transition-all duration-300"
+          class="w-full md:w-auto px-6 py-3 rounded-[10px] text-sm font-medium tracking-wide transition-all duration-300"
           :style="activeGroup === i
             ? 'background:#D4B87A; color:#fff; box-shadow: 0 4px 14px rgba(212,184,122,0.4);'
             : 'background:rgba(212,184,122,0.12); color:#9a7d45;'"
@@ -105,48 +105,35 @@
 
           </div>
         </Transition>
-      </div>
 
+        <!-- 看更多 -->
+        <div class="flex justify-center mt-6">
+          <RouterLink
+            to="/gallery"
+            class="inline-flex items-center gap-2 px-6 py-2.5 rounded-[10px] text-sm font-medium border transition-all duration-300 hover:shadow-md"
+            style="border-color:#D4B87A; color:#9a7d45; background:rgba(212,184,122,0.08);"
+          >
+            <PhotoIcon class="w-4 h-4" />
+            看更多照片
+          </RouterLink>
+        </div>
+
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { RouterLink } from 'vue-router'
 import { ChevronLeftIcon, ChevronRightIcon, PhotoIcon } from '@heroicons/vue/24/outline'
-
-// ── 照片設定 ────────────────────────────────────────────────
-// 在各組的 photos 陣列中加入 { src: import('...'), caption: '...' }
-const groups = [
-  {
-    zh: '登記',
-    en: 'Registering Marriage',
-    photos: [
-      // { src: img, caption: '' },
-    ],
-  },
-  {
-    zh: '婚紗',
-    en: 'Prewedding',
-    photos: [
-      // { src: img, caption: '' },
-    ],
-  },
-  {
-    zh: '蜜月',
-    en: 'Honeymoon',
-    photos: [
-      // { src: img, caption: '' },
-    ],
-  },
-]
-// ────────────────────────────────────────────────────────────
+import { groups } from '@/data/photos.js'
 
 const activeGroup = ref(0)
 const current = ref(0)
 const slideDirection = ref('next')
 
-const currentPhotos = computed(() => groups[activeGroup.value].photos)
+const currentPhotos = computed(() => groups[activeGroup.value].photos.slice(0, 6))
 
 function switchGroup(i) {
   if (i === activeGroup.value) return

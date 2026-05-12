@@ -5,21 +5,21 @@
   >
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <!-- Logo -->
-      <a href="#hero" class="font-serif text-xl transition-colors duration-300"
+      <RouterLink to="/#hero" class="font-serif text-xl transition-colors duration-300"
          :style="scrolled ? 'color:#B1C97A' : 'color:white'">
         L &amp; R
-      </a>
+      </RouterLink>
 
       <!-- Desktop nav -->
       <ul class="hidden md:flex items-center gap-8">
         <li v-for="item in navItems" :key="item.label">
-          <a
-            :href="item.href"
+          <RouterLink
+            :to="item.href"
             class="text-sm tracking-widest transition-colors duration-300 hover:opacity-70 relative nav-link"
             :style="scrolled ? 'color:#555' : 'color:white'"
           >
             {{ item.label }}
-          </a>
+          </RouterLink>
         </li>
       </ul>
 
@@ -42,8 +42,8 @@
         </a>
 
         <!-- RSVP button -->
-        <a
-          href="#rsvp"
+        <RouterLink
+          to="/#rsvp"
           class="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300"
           :style="scrolled
             ? 'background: #6E8F3C; color: white; box-shadow: 0 2px 10px rgba(110,143,60,0.3)'
@@ -53,7 +53,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
           </svg>
           出席回覆
-        </a>
+        </RouterLink>
       </div>
 
       <!-- Mobile hamburger -->
@@ -76,24 +76,24 @@
       <div v-if="mobileOpen" class="md:hidden bg-white bg-opacity-98 shadow-lg px-6 pb-6">
         <ul class="flex flex-col gap-4 pt-2">
           <li v-for="item in navItems" :key="item.label">
-            <a
-              :href="item.href"
+            <RouterLink
+              :to="item.href"
               @click="mobileOpen = false"
               class="block text-sm tracking-widest py-2 border-b border-gray-100"
               style="color:#555"
             >
               {{ item.label }}
-            </a>
+            </RouterLink>
           </li>
           <li>
-            <a href="#rsvp" @click="mobileOpen = false"
+            <RouterLink to="/#rsvp" @click="mobileOpen = false"
                class="block text-center py-3 rounded-full text-white text-sm font-medium mt-2"
                style="background: #6E8F3C">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block mr-1">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
               </svg>
               出席回覆
-            </a>
+            </RouterLink>
           </li>
           <li class="flex flex-col items-center gap-2 pt-2 pb-1">
             <p class="text-xs tracking-widest" style="color:#b1c97a">掃描 QRCode 加入官方 LINE</p>
@@ -113,19 +113,22 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { RouterLink } from 'vue-router'
 
-const scrolled    = ref(false)
+const props = defineProps({ forceScrolled: Boolean })
+
+const scrolled    = ref(props.forceScrolled)
 const mobileOpen  = ref(false)
 
 const navItems = [
-  { label: 'HOME',  href: '#hero' },
-  { label: 'STORY', href: '#about' },
-  { label: 'VENUE', href: '#map' },
-  { label: 'RSVP',  href: '#rsvp' },
+  { label: 'HOME',  href: '/#hero' },
+  { label: 'STORY', href: '/#about' },
+  { label: 'VENUE', href: '/#map' },
+  { label: 'RSVP',  href: '/#rsvp' },
 ]
 
 function handleScroll() {
-  scrolled.value = window.scrollY > 60
+  if (!props.forceScrolled) scrolled.value = window.scrollY > 60
 }
 
 onMounted(() => window.addEventListener('scroll', handleScroll))
