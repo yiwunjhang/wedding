@@ -3,18 +3,29 @@
 
     <NavBar force-scrolled />
 
-    <div class="max-w-6xl mx-auto px-4 md:px-6 pt-28 pb-12">
+    <div class="max-w-6xl mx-auto px-4 md:px-6 pt-28 pb-8">
 
       <!-- Back -->
-      <div class="mb-6">
+      <div class="mb-2 flex justify-start">
         <RouterLink to="/#moments" class="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70" style="color:#6E8F3C">
           <ChevronLeftIcon class="w-4 h-4" />
           返回
         </RouterLink>
+      </div>  
+
+      <!-- Header -->
+      <div data-aos="fade-up" class="mb-10 text-center">
+        <h2 class="section-title font-serif">照片集</h2>
+        <p class="section-subtitle">PHOTO GALLERY</p>
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <span class="block h-px w-16 opacity-40" style="background:#D4B87A"></span>
+          <span style="color:#D4B87A">✦</span>
+          <span class="block h-px w-16 opacity-40" style="background:#D4B87A"></span>
+        </div>
       </div>
 
       <!-- Tabs -->
-      <div class="flex flex-col md:flex-row justify-center gap-3 mb-6">
+      <div class="flex flex-col md:flex-row justify-center gap-3 mb-6" data-aos="fade-up" data-aos-delay="100">
         <button
           v-for="(group, i) in groups"
           :key="i"
@@ -38,15 +49,15 @@
 
       <template v-else>
         <!-- Page flip container -->
-        <div class="relative overflow-hidden rounded-2xl" style="perspective: 1400px;">
+        <div class="relative overflow-hidden rounded-2xl" style="perspective: 1400px;" data-aos="fade-up" data-aos-delay="200">
           <Transition :name="flipDir === 'next' ? 'flip-next' : 'flip-prev'" mode="out-in">
             <div :key="`${activeTab}-${currentPage}`"
-                 class="grid grid-cols-1 md:grid-cols-3 gap-3"
+                 class="grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center"
                  style="transform-style: preserve-3d; will-change: transform;">
               <div
                 v-for="(photo, i) in pagePhotos"
                 :key="i"
-                class="relative rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300"
+                class="relative rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 w-full"
                 style="aspect-ratio: 4/3;"
                 @click="openLightbox(pageStart + i)"
               >
@@ -157,6 +168,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import AOS from 'aos'
 import { RouterLink } from 'vue-router'
 import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 import NavBar from '../components/NavBar.vue'
@@ -231,7 +243,10 @@ function onKey(e) {
   }
 }
 
-onMounted(() => window.addEventListener('keydown', onKey))
+onMounted(() => {
+  AOS.init({ once: true, duration: 800, offset: 80, easing: 'ease-out-cubic' })
+  window.addEventListener('keydown', onKey)
+})
 onUnmounted(() => {
   window.removeEventListener('keydown', onKey)
   document.body.style.overflow = ''
