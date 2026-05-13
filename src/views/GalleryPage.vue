@@ -327,15 +327,16 @@ onUnmounted(() => {
               opacity 0.3s ease;
   transform-origin: left center;
   position: absolute;
+  inset: 0;
   width: 100%;
 }
 .flip-next-enter-from {
   opacity: 0;
-  transform: rotateY(55deg) translateX(80px) scale(0.88);
+  transform: rotateY(40deg) scale(0.92);
 }
 .flip-next-leave-to {
   opacity: 0;
-  transform: rotateY(-55deg) translateX(-80px) scale(0.88);
+  transform: rotateY(-40deg) scale(0.92);
 }
 
 .flip-prev-enter-active {
@@ -348,15 +349,16 @@ onUnmounted(() => {
               opacity 0.3s ease;
   transform-origin: right center;
   position: absolute;
+  inset: 0;
   width: 100%;
 }
 .flip-prev-enter-from {
   opacity: 0;
-  transform: rotateY(-55deg) translateX(-80px) scale(0.88);
+  transform: rotateY(-40deg) scale(0.92);
 }
 .flip-prev-leave-to {
   opacity: 0;
-  transform: rotateY(55deg) translateX(80px) scale(0.88);
+  transform: rotateY(40deg) scale(0.92);
 }
 
 /* ── Lightbox ── */
