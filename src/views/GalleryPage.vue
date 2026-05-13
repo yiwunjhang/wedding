@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-hero-pattern" style="background-color: #FDFAF4">
+  <div class="min-h-screen bg-hero-pattern overflow-x-hidden" style="background-color: #FDFAF4">
 
     <NavBar force-scrolled />
 
@@ -178,11 +178,11 @@
             </p>
 
             <button v-if="currentPhotos.length > 1" @click="lbPrev"
-                    class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10">
+                    class="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10" style="background:rgba(0,0,0,0.3)">
               <ChevronLeftIcon class="w-6 h-6 text-white" />
             </button>
             <button v-if="currentPhotos.length > 1" @click="lbNext"
-                    class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10">
+                    class="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10" style="background:rgba(0,0,0,0.3)">
               <ChevronRightIcon class="w-6 h-6 text-white" />
             </button>
 
