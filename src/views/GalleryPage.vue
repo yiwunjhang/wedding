@@ -25,7 +25,7 @@
       </div>
 
       <!-- Tabs -->
-      <div class="flex flex-col md:flex-row justify-center gap-3 mb-6" data-aos="fade-up" data-aos-delay="100">
+      <div class="flex flex-col md:flex-row justify-center gap-3 mb-4" data-aos="fade-up" data-aos-delay="100">
         <button
           v-for="(group, i) in groups"
           :key="i"
@@ -38,6 +38,28 @@
           <span class="block text-xs opacity-75 leading-none mb-0.5">{{ group.en }}</span>
           <span>{{ group.zh }}</span>
         </button>
+      </div>
+
+      <!-- Date sub-tabs (蜜月) -->
+      <div v-if="currentGroup.dateGroups?.length" class="mb-6" data-aos="fade-up" data-aos-delay="150">
+        <div class="flex flex-wrap justify-center gap-2">
+          <button
+            class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+            :style="activeDateTab === null
+              ? 'background:#6E8F3C; color:#fff;'
+              : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'"
+            @click="switchDateTab(null)"
+          >全部</button>
+          <button
+            v-for="(dg, i) in currentGroup.dateGroups"
+            :key="dg.date"
+            @click="switchDateTab(i)"
+            class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+            :style="activeDateTab === i
+              ? 'background:#6E8F3C; color:#fff;'
+              : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'"
+          >{{ dg.date }}</button>
+        </div>
       </div>
 
       <!-- Empty state -->
@@ -176,14 +198,22 @@ import { groups } from '@/data/photos.js'
 
 const PER_PAGE = 6
 
-const activeTab   = ref(0)
-const currentPage = ref(0)
-const flipDir     = ref('next')
+const activeTab     = ref(0)
+const activeDateTab = ref(null)
+const currentPage   = ref(0)
+const flipDir       = ref('next')
 
 const lightboxIndex = ref(null)
 const lbDirection   = ref('next')
 
-const currentPhotos = computed(() => groups[activeTab.value].photos)
+const currentGroup  = computed(() => groups[activeTab.value])
+const currentPhotos = computed(() => {
+  const g = currentGroup.value
+  if (g.dateGroups?.length && activeDateTab.value !== null) {
+    return g.dateGroups[activeDateTab.value].photos
+  }
+  return g.photos
+})
 const totalPages    = computed(() => Math.ceil(currentPhotos.value.length / PER_PAGE))
 const pageStart     = computed(() => currentPage.value * PER_PAGE)
 const pagePhotos    = computed(() => currentPhotos.value.slice(pageStart.value, pageStart.value + PER_PAGE))
@@ -191,6 +221,13 @@ const pagePhotos    = computed(() => currentPhotos.value.slice(pageStart.value, 
 function switchTab(i) {
   if (i === activeTab.value) return
   activeTab.value = i
+  activeDateTab.value = null
+  currentPage.value = 0
+  flipDir.value = 'next'
+}
+
+function switchDateTab(i) {
+  activeDateTab.value = i
   currentPage.value = 0
   flipDir.value = 'next'
 }
