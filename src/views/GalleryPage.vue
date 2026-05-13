@@ -78,13 +78,22 @@
                  style="transform-style: preserve-3d; will-change: transform;">
               <div
                 v-for="(photo, i) in pagePhotos"
-                :key="i"
-                class="relative rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 w-full"
-                style="aspect-ratio: 4/3;"
+                :key="photo.src"
+                class="relative rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 w-full isolate"
+                style="aspect-ratio: 4/3; transform: translateZ(0);"
                 @click="openLightbox(pageStart + i)"
               >
-                <img :src="photo.src" :alt="photo.caption" class="w-full h-full object-cover" />
-                <div v-if="photo.caption"
+                <!-- Skeleton -->
+                <div v-if="!loadedSet.has(photo.src)"
+                     class="absolute inset-0 shimmer rounded-2xl" />
+                <img
+                  :src="photo.src"
+                  :alt="photo.caption"
+                  class="w-full h-full object-cover transition-opacity duration-500"
+                  :class="loadedSet.has(photo.src) ? 'opacity-100' : 'opacity-0'"
+                  @load="onImgLoad(photo.src)"
+                />
+                <div v-if="photo.caption && loadedSet.has(photo.src)"
                      class="absolute bottom-0 left-0 right-0 px-3 py-2 text-xs truncate"
                      style="background: rgba(255,255,255,0.55); color:#4a3f2f; backdrop-filter:blur(4px)">
                   {{ photo.caption }}
@@ -160,7 +169,7 @@
               <img :key="lightboxIndex"
                    :src="currentPhotos[lightboxIndex].src"
                    :alt="currentPhotos[lightboxIndex].caption"
-                   class="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl" />
+                   class="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl block mx-auto" />
             </Transition>
 
             <p v-if="currentPhotos[lightboxIndex].caption"
@@ -205,6 +214,11 @@ const flipDir       = ref('next')
 
 const lightboxIndex = ref(null)
 const lbDirection   = ref('next')
+const loadedSet     = ref(new Set())
+
+function onImgLoad(src) {
+  loadedSet.value = new Set([...loadedSet.value, src])
+}
 
 const currentGroup  = computed(() => groups[activeTab.value])
 const currentPhotos = computed(() => {
@@ -291,6 +305,17 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* ── Skeleton shimmer ── */
+.shimmer {
+  background: linear-gradient(90deg, #f0ece4 25%, #e8e0d0 50%, #f0ece4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ── 翻頁動畫 ── */
 .flip-next-enter-active {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
