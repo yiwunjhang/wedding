@@ -50,6 +50,7 @@
                     :key="current"
                     :src="currentPhotos[current].src"
                     :alt="currentPhotos[current].caption"
+                    decoding="async"
                     class="w-full h-full object-cover"
                   />
                 </Transition>

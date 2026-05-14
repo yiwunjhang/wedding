@@ -23,13 +23,14 @@
         </li>
       </ul>
 
-      <!-- Desktop: LINE link -->
-      <div class="hidden md:flex items-center">
+      <!-- Right actions -->
+      <div class="flex items-center gap-2">
+        <!-- LINE link（desktop only） -->
         <a
           href="https://lin.ee/5oF9YcR"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 mr-3"
+          class="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300"
           :style="scrolled
             ? 'background:rgba(0,185,0,0.1); color:#00b900;'
             : 'background:rgba(255,255,255,0.15); color:white; border:1px solid rgba(255,255,255,0.4); backdrop-filter:blur(4px)'"
@@ -39,10 +40,8 @@
           </svg>
           LINE
         </a>
-      </div>
 
-      <!-- RSVP button（always visible） -->
-      <div class="flex items-center gap-2">
+        <!-- RSVP button（always visible） -->
         <RouterLink
           to="/#rsvp"
           class="inline-flex items-center gap-1.5 px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm font-medium transition-all duration-300"

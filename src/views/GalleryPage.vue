@@ -89,6 +89,8 @@
                 <img
                   :src="photo.src"
                   :alt="photo.caption"
+                  loading="lazy"
+                  decoding="async"
                   class="w-full h-full object-cover transition-opacity duration-500"
                   :class="loadedSet.has(photo.src) ? 'opacity-100' : 'opacity-0'"
                   @load="onImgLoad(photo.src)"
@@ -169,6 +171,7 @@
               <img :key="lightboxIndex"
                    :src="currentPhotos[lightboxIndex].src"
                    :alt="currentPhotos[lightboxIndex].caption"
+                   decoding="async"
                    class="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl block mx-auto" />
             </Transition>
 
@@ -203,6 +206,7 @@ import AOS from 'aos'
 import { RouterLink } from 'vue-router'
 import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon, PhotoIcon } from '@heroicons/vue/24/outline'
 import NavBar from '../components/NavBar.vue'
+import LazyImg from '../components/LazyImg.vue'
 import { groups } from '@/data/photos.js'
 
 const PER_PAGE = 6
