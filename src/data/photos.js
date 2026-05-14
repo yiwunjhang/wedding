@@ -1,6 +1,6 @@
-const rmFiles = import.meta.glob('/src/assets/images/RegisteringMarriage/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG,WEBP}', { eager: true })
-const pwFiles = import.meta.glob('/src/assets/images/Prewedding/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG,WEBP}', { eager: true })
-const hmFiles = import.meta.glob('/src/assets/images/Honeymoon/**/*.{png,jpg,jpeg,webp,PNG,JPG,JPEG,WEBP}', { eager: true })
+const rmFiles = import.meta.glob('/src/assets/images/RegisteringMarriage/*.{png,jpg,jpeg,webp,gif,PNG,JPG,JPEG,WEBP,GIF}', { eager: true })
+const pwFiles = import.meta.glob('/src/assets/images/Prewedding/*.{png,jpg,jpeg,webp,gif,PNG,JPG,JPEG,WEBP,GIF}', { eager: true })
+const hmFiles = import.meta.glob('/src/assets/images/Honeymoon/**/*.{png,jpg,jpeg,webp,gif,PNG,JPG,JPEG,WEBP,GIF}', { eager: true })
 
 function toPhotos(modules) {
   return Object.entries(modules)
