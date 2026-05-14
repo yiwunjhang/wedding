@@ -23,14 +23,13 @@
         </li>
       </ul>
 
-      <!-- Desktop right actions -->
-      <div class="hidden md:flex items-center gap-3">
-        <!-- LINE link -->
+      <!-- Desktop: LINE link -->
+      <div class="hidden md:flex items-center">
         <a
           href="https://lin.ee/5oF9YcR"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300"
+          class="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 mr-3"
           :style="scrolled
             ? 'background:rgba(0,185,0,0.1); color:#00b900;'
             : 'background:rgba(255,255,255,0.15); color:white; border:1px solid rgba(255,255,255,0.4); backdrop-filter:blur(4px)'"
@@ -40,11 +39,13 @@
           </svg>
           LINE
         </a>
+      </div>
 
-        <!-- RSVP button -->
+      <!-- RSVP button（always visible） -->
+      <div class="flex items-center gap-2">
         <RouterLink
           to="/#rsvp"
-          class="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300"
+          class="inline-flex items-center gap-1.5 px-3 py-1.5 md:px-5 md:py-2 rounded-full text-sm font-medium transition-all duration-300"
           :style="scrolled
             ? 'background: #6E8F3C; color: white; box-shadow: 0 2px 10px rgba(110,143,60,0.3)'
             : 'background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(4px)'"
@@ -54,21 +55,21 @@
           </svg>
           出席回覆
         </RouterLink>
-      </div>
 
-      <!-- Mobile hamburger -->
-      <button
-        @click="mobileOpen = !mobileOpen"
-        class="md:hidden p-2 rounded-lg transition-colors"
-        :style="scrolled ? 'color:#B1C97A' : 'color:white'"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path v-if="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"/>
-          <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </button>
+        <!-- Mobile hamburger -->
+        <button
+          @click="mobileOpen = !mobileOpen"
+          class="md:hidden p-2 rounded-lg transition-colors"
+          :style="scrolled ? 'color:#B1C97A' : 'color:white'"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path v-if="!mobileOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"/>
+            <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Mobile menu -->
@@ -83,16 +84,6 @@
               style="color:#555"
             >
               {{ item.label }}
-            </RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/#rsvp" @click="mobileOpen = false"
-               class="block text-center py-3 rounded-full text-white text-sm font-medium mt-2"
-               style="background: #6E8F3C">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block mr-1">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
-              </svg>
-              出席回覆
             </RouterLink>
           </li>
           <li class="flex flex-col items-center gap-2 pt-2 pb-1">
