@@ -6,8 +6,6 @@ import { fileURLToPath } from 'url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '../src/assets/images/Honeymoon')
 const MAX_SIDE = 800   // landscape: max width; portrait: max height
-const JPEG_QUALITY = 78
-const PNG_QUALITY = 80
 const SKIP_BELOW_KB = 300
 
 async function collectImages(dir) {
@@ -58,9 +56,9 @@ async function process(filePath) {
   }
 
   if (ext === '.png') {
-    pipeline = pipeline.png({ quality: PNG_QUALITY, compressionLevel: 9 })
+    pipeline = pipeline.png()
   } else {
-    pipeline = pipeline.jpeg({ quality: JPEG_QUALITY, mozjpeg: true })
+    pipeline = pipeline.jpeg({ quality: 100 })
   }
 
   const output = await pipeline.toBuffer()
