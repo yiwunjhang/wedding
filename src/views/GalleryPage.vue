@@ -7,11 +7,13 @@
 
       <!-- Back -->
       <div class="mb-2 flex justify-start">
-        <RouterLink to="/#moments" class="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70" style="color:#6E8F3C">
+        <RouterLink to="/#moments"
+          class="inline-flex items-center gap-1.5 text-sm font-medium transition-opacity hover:opacity-70"
+          style="color:#6E8F3C">
           <ChevronLeftIcon class="w-4 h-4" />
           返回
         </RouterLink>
-      </div>  
+      </div>
 
       <!-- Header -->
       <div data-aos="fade-up" class="mb-10 text-center">
@@ -26,15 +28,11 @@
 
       <!-- Tabs -->
       <div class="flex flex-col md:flex-row justify-center gap-3 mb-4" data-aos="fade-up" data-aos-delay="100">
-        <button
-          v-for="(group, i) in groups"
-          :key="i"
-          @click="switchTab(i)"
+        <button v-for="(group, i) in groups" :key="i" @click="switchTab(i)"
           class="w-full md:w-auto px-6 py-3 rounded-[10px] text-sm font-medium tracking-wide transition-all duration-300"
           :style="activeTab === i
             ? 'background:#D4B87A; color:#fff; box-shadow: 0 4px 14px rgba(212,184,122,0.4);'
-            : 'background:rgba(212,184,122,0.12); color:#9a7d45;'"
-        >
+            : 'background:rgba(212,184,122,0.12); color:#9a7d45;'">
           <span class="block text-xs opacity-75 leading-none mb-0.5">{{ group.en }}</span>
           <span>{{ group.zh }}</span>
         </button>
@@ -42,62 +40,62 @@
 
       <!-- Date sub-tabs (蜜月) -->
       <div v-if="currentGroup.dateGroups?.length" class="mb-6" data-aos="fade-up" data-aos-delay="150">
-        <div class="flex flex-wrap justify-center gap-2">
-          <button
-            class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
-            :style="activeDateTab === null
-              ? 'background:#6E8F3C; color:#fff;'
-              : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'"
-            @click="switchDateTab(null)"
-          >全部</button>
-          <button
-            v-for="(dg, i) in currentGroup.dateGroups"
-            :key="dg.date"
-            @click="switchDateTab(i)"
-            class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
-            :style="activeDateTab === i
-              ? 'background:#6E8F3C; color:#fff;'
-              : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'"
-          >{{ dg.date }}</button>
+
+        <!-- Mobile: horizontal scroll strip -->
+        <div class="relative md:hidden">
+          <div class="pointer-events-none absolute left-0 top-0 h-full w-8 z-10"
+            style="background: linear-gradient(to right, #FDFAF4, transparent)" />
+          <div class="pointer-events-none absolute right-0 top-0 h-full w-8 z-10"
+            style="background: linear-gradient(to left, #FDFAF4, transparent)" />
+          <div ref="dateStrip" class="date-strip flex flex-row gap-2 overflow-x-auto py-1">
+            <button ref="dateAllRef"
+              class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+              :style="activeDateTab === null ? 'background:#6E8F3C; color:#fff;' : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'"
+              @click="switchDateTab(null)">全部</button>
+            <button v-for="(dg, i) in currentGroup.dateGroups" :key="dg.date"
+              :ref="el => { if (el) dateTabRefs[i] = el }" @click="switchDateTab(i)"
+              class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+              :style="activeDateTab === i ? 'background:#6E8F3C; color:#fff;' : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'">{{
+              dg.date }}</button>
+          </div>
         </div>
+
+        <!-- Desktop: 5 per row, centered -->
+        <div class="hidden md:flex flex-col items-center gap-2">
+          <div v-for="(row, ri) in dateRows" :key="ri" class="flex flex-wrap justify-center gap-2">
+            <button v-for="item in row" :key="item.key" @click="switchDateTab(item.i)"
+              class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+              :style="activeDateTab === item.i ? 'background:#6E8F3C; color:#fff;' : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'">{{
+              item.label }}</button>
+          </div>
+        </div>
+
       </div>
 
       <!-- Empty state -->
-      <div v-if="currentPhotos.length === 0"
-           class="flex flex-col items-center justify-center gap-3 py-32 text-center">
+      <div v-if="currentPhotos.length === 0" class="flex flex-col items-center justify-center gap-3 py-32 text-center">
         <PhotoIcon class="w-14 h-14 opacity-20" style="color:#4a3f2f" />
         <p class="text-sm opacity-40" style="color:#4a3f2f">尚未加入照片</p>
       </div>
 
       <template v-else>
         <!-- Page flip container -->
-        <div class="relative overflow-hidden rounded-2xl" style="perspective: 1400px;" data-aos="fade-up" data-aos-delay="200">
+        <div class="relative overflow-hidden rounded-2xl" style="perspective: 1400px;" data-aos="fade-up"
+          data-aos-delay="200">
           <Transition :name="flipDir === 'next' ? 'flip-next' : 'flip-prev'" mode="out-in">
-            <div :key="`${activeTab}-${currentPage}`"
-                 class="grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center"
-                 style="transform-style: preserve-3d; will-change: transform;">
-              <div
-                v-for="(photo, i) in pagePhotos"
-                :key="photo.src"
+            <div :key="`${activeTab}-${currentPage}`" class="grid grid-cols-1 md:grid-cols-3 gap-3 justify-items-center"
+              style="transform-style: preserve-3d; will-change: transform;">
+              <div v-for="(photo, i) in pagePhotos" :key="photo.src"
                 class="relative rounded-2xl overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-300 w-full isolate"
-                style="aspect-ratio: 4/3; transform: translateZ(0);"
-                @click="openLightbox(pageStart + i)"
-              >
+                style="aspect-ratio: 4/3; transform: translateZ(0);" @click="openLightbox(pageStart + i)">
                 <!-- Skeleton -->
-                <div v-if="!loadedSet.has(photo.src)"
-                     class="absolute inset-0 shimmer rounded-2xl" />
-                <img
-                  :src="photo.src"
-                  :alt="photo.caption"
-                  loading="lazy"
-                  decoding="async"
+                <div v-if="!loadedSet.has(photo.src)" class="absolute inset-0 shimmer rounded-2xl" />
+                <img :src="photo.src" :alt="photo.caption" loading="lazy" decoding="async"
                   class="w-full h-full object-cover transition-opacity duration-500"
-                  :class="loadedSet.has(photo.src) ? 'opacity-100' : 'opacity-0'"
-                  @load="onImgLoad(photo.src)"
-                />
+                  :class="loadedSet.has(photo.src) ? 'opacity-100' : 'opacity-0'" @load="onImgLoad(photo.src)" />
                 <div v-if="photo.caption && loadedSet.has(photo.src)"
-                     class="absolute bottom-0 left-0 right-0 px-3 py-2 text-xs truncate"
-                     style="background: rgba(255,255,255,0.55); color:#4a3f2f; backdrop-filter:blur(4px)">
+                  class="absolute bottom-0 left-0 right-0 px-3 py-2 text-xs truncate"
+                  style="background: rgba(255,255,255,0.55); color:#4a3f2f; backdrop-filter:blur(4px)">
                   {{ photo.caption }}
                 </div>
               </div>
@@ -107,39 +105,28 @@
 
         <!-- Pagination controls -->
         <div class="mt-6 flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6">
-          <button
-            @click="prevPage"
-            :disabled="currentPage === 0"
+          <button @click="prevPage" :disabled="currentPage === 0"
             class="w-full md:w-auto flex items-center justify-center gap-1.5 px-5 py-3 rounded-[10px] text-sm font-medium border transition-all duration-300"
             :style="currentPage === 0
               ? 'opacity:0.3; cursor:not-allowed; border-color:#D4B87A; color:#9a7d45;'
-              : 'border-color:#D4B87A; color:#9a7d45; background:rgba(212,184,122,0.08); cursor:pointer;'"
-          >
+              : 'border-color:#D4B87A; color:#9a7d45; background:rgba(212,184,122,0.08); cursor:pointer;'">
             <ChevronLeftIcon class="w-4 h-4" />
             上一頁
           </button>
 
           <!-- Page dots -->
           <div class="flex items-center gap-2 order-first md:order-none">
-            <button
-              v-for="n in totalPages"
-              :key="n"
-              @click="goToPage(n - 1)"
-              class="rounded-full transition-all duration-300"
-              :style="currentPage === n - 1
+            <button v-for="n in totalPages" :key="n" @click="goToPage(n - 1)"
+              class="rounded-full transition-all duration-300" :style="currentPage === n - 1
                 ? 'width:24px; height:8px; background:#D4B87A;'
-                : 'width:8px; height:8px; background:rgba(74,63,47,0.2);'"
-            />
+                : 'width:8px; height:8px; background:rgba(74,63,47,0.2);'" />
           </div>
 
-          <button
-            @click="nextPage"
-            :disabled="currentPage >= totalPages - 1"
+          <button @click="nextPage" :disabled="currentPage >= totalPages - 1"
             class="w-full md:w-auto flex items-center justify-center gap-1.5 px-5 py-3 rounded-[10px] text-sm font-medium border transition-all duration-300"
             :style="currentPage >= totalPages - 1
               ? 'opacity:0.3; cursor:not-allowed; border-color:#D4B87A; color:#9a7d45;'
-              : 'border-color:#D4B87A; color:#9a7d45; background:rgba(212,184,122,0.08); cursor:pointer;'"
-          >
+              : 'border-color:#D4B87A; color:#9a7d45; background:rgba(212,184,122,0.08); cursor:pointer;'">
             下一頁
             <ChevronRightIcon class="w-4 h-4" />
           </button>
@@ -156,36 +143,35 @@
     <!-- Lightbox -->
     <Teleport to="body">
       <Transition name="lb-fade">
-        <div v-if="lightboxIndex !== null"
-             class="fixed inset-0 z-[200] flex items-center justify-center"
-             @click.self="closeLightbox">
-          <div class="absolute inset-0" style="background:rgba(30,25,20,0.85); backdrop-filter:blur(6px)" @click="closeLightbox" />
+        <div v-if="lightboxIndex !== null" class="fixed inset-0 z-[200] flex items-center justify-center"
+          @click.self="closeLightbox">
+          <div class="absolute inset-0" style="background:rgba(30,25,20,0.85); backdrop-filter:blur(6px)"
+            @click="closeLightbox" />
 
           <div class="relative z-10 max-w-4xl w-full mx-4">
             <button @click="closeLightbox"
-                    class="absolute -top-10 right-0 w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10 transition">
+              class="absolute -top-10 right-0 w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10 transition">
               <XMarkIcon class="w-5 h-5 text-white" />
             </button>
 
             <Transition :name="lbDirection === 'next' ? 'lb-slide-left' : 'lb-slide-right'" mode="out-in">
-              <img :key="lightboxIndex"
-                   :src="currentPhotos[lightboxIndex].src"
-                   :alt="currentPhotos[lightboxIndex].caption"
-                   decoding="async"
-                   class="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl block mx-auto" />
+              <img :key="lightboxIndex" :src="currentPhotos[lightboxIndex].src"
+                :alt="currentPhotos[lightboxIndex].caption" decoding="async"
+                class="max-w-full max-h-[80vh] w-auto h-auto rounded-2xl shadow-2xl block mx-auto" />
             </Transition>
 
-            <p v-if="currentPhotos[lightboxIndex].caption"
-               class="text-center text-white/80 text-sm mt-3">
+            <p v-if="currentPhotos[lightboxIndex].caption" class="text-center text-white/80 text-sm mt-3">
               {{ currentPhotos[lightboxIndex].caption }}
             </p>
 
             <button v-if="currentPhotos.length > 1" @click="lbPrev"
-                    class="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10" style="background:rgba(0,0,0,0.3)">
+              class="absolute left-2 md:left-0 top-1/2 -translate-y-1/2 md:-translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10"
+              style="background:rgba(0,0,0,0.3)">
               <ChevronLeftIcon class="w-6 h-6 text-white" />
             </button>
             <button v-if="currentPhotos.length > 1" @click="lbNext"
-                    class="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10" style="background:rgba(0,0,0,0.3)">
+              class="absolute right-2 md:right-0 top-1/2 -translate-y-1/2 md:translate-x-14 w-11 h-11 rounded-full flex items-center justify-center transition hover:bg-white/10"
+              style="background:rgba(0,0,0,0.3)">
               <ChevronRightIcon class="w-6 h-6 text-white" />
             </button>
 
@@ -201,7 +187,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import AOS from 'aos'
 import { RouterLink } from 'vue-router'
 import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon, PhotoIcon } from '@heroicons/vue/24/outline'
@@ -211,20 +197,48 @@ import { groups } from '@/data/photos.js'
 
 const PER_PAGE = 6
 
-const activeTab     = ref(0)
+const activeTab = ref(0)
 const activeDateTab = ref(null)
-const currentPage   = ref(0)
-const flipDir       = ref('next')
+const currentPage = ref(0)
+const flipDir = ref('next')
+
+const dateStrip = ref(null)
+const dateAllRef = ref(null)
+const dateTabRefs = ref([])
+
+function scrollDateTabIntoView(i) {
+  nextTick(() => {
+    const strip = dateStrip.value
+    const btn = i === null ? dateAllRef.value : dateTabRefs.value[i]
+    if (!strip || !btn) return
+    const stripRect = strip.getBoundingClientRect()
+    const btnRect = btn.getBoundingClientRect()
+    const offset = btnRect.left - stripRect.left - (stripRect.width - btnRect.width) / 2
+    strip.scrollBy({ left: offset, behavior: 'smooth' })
+  })
+}
 
 const lightboxIndex = ref(null)
-const lbDirection   = ref('next')
-const loadedSet     = ref(new Set())
+const lbDirection = ref('next')
+const loadedSet = ref(new Set())
 
 function onImgLoad(src) {
   loadedSet.value = new Set([...loadedSet.value, src])
 }
 
-const currentGroup  = computed(() => groups[activeTab.value])
+const currentGroup = computed(() => groups[activeTab.value])
+
+const dateItems = computed(() => [
+  { key: 'all', label: '全部', i: null },
+  ...currentGroup.value.dateGroups?.map((dg, i) => ({ key: dg.date, label: dg.date, i })) ?? []
+])
+const dateRows = computed(() => {
+  const rows = []
+  for (let j = 0; j < dateItems.value.length; j += 5) {
+    rows.push(dateItems.value.slice(j, j + 5))
+  }
+  return rows
+})
 const currentPhotos = computed(() => {
   const g = currentGroup.value
   if (g.dateGroups?.length && activeDateTab.value !== null) {
@@ -232,9 +246,9 @@ const currentPhotos = computed(() => {
   }
   return g.photos
 })
-const totalPages    = computed(() => Math.ceil(currentPhotos.value.length / PER_PAGE))
-const pageStart     = computed(() => currentPage.value * PER_PAGE)
-const pagePhotos    = computed(() => currentPhotos.value.slice(pageStart.value, pageStart.value + PER_PAGE))
+const totalPages = computed(() => Math.ceil(currentPhotos.value.length / PER_PAGE))
+const pageStart = computed(() => currentPage.value * PER_PAGE)
+const pagePhotos = computed(() => currentPhotos.value.slice(pageStart.value, pageStart.value + PER_PAGE))
 
 function switchTab(i) {
   if (i === activeTab.value) return
@@ -248,6 +262,7 @@ function switchDateTab(i) {
   activeDateTab.value = i
   currentPage.value = 0
   flipDir.value = 'next'
+  scrollDateTabIntoView(i)
 }
 
 function nextPage() {
@@ -309,35 +324,54 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* ── Date strip (hide scrollbar) ── */
+.date-strip {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.date-strip::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Skeleton shimmer ── */
 .shimmer {
   background: linear-gradient(90deg, #f0ece4 25%, #e8e0d0 50%, #f0ece4 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 }
+
 @keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* ── 翻頁動畫 ── */
 .flip-next-enter-active {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 0.4s ease;
+    opacity 0.4s ease;
   transform-origin: left center;
 }
+
 .flip-next-leave-active {
   transition: transform 0.4s cubic-bezier(0.64, 0, 0.78, 0),
-              opacity 0.3s ease;
+    opacity 0.3s ease;
   transform-origin: left center;
   position: absolute;
   inset: 0;
   width: 100%;
 }
+
 .flip-next-enter-from {
   opacity: 0;
   transform: rotateY(40deg) scale(0.92);
 }
+
 .flip-next-leave-to {
   opacity: 0;
   transform: rotateY(-40deg) scale(0.92);
@@ -345,30 +379,42 @@ onUnmounted(() => {
 
 .flip-prev-enter-active {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-              opacity 0.4s ease;
+    opacity 0.4s ease;
   transform-origin: right center;
 }
+
 .flip-prev-leave-active {
   transition: transform 0.4s cubic-bezier(0.64, 0, 0.78, 0),
-              opacity 0.3s ease;
+    opacity 0.3s ease;
   transform-origin: right center;
   position: absolute;
   inset: 0;
   width: 100%;
 }
+
 .flip-prev-enter-from {
   opacity: 0;
   transform: rotateY(-40deg) scale(0.92);
 }
+
 .flip-prev-leave-to {
   opacity: 0;
   transform: rotateY(40deg) scale(0.92);
 }
 
 /* ── Lightbox ── */
-.lb-fade-enter-active { transition: opacity 0.3s ease; }
-.lb-fade-leave-active { transition: opacity 0.25s ease; }
-.lb-fade-enter-from, .lb-fade-leave-to { opacity: 0; }
+.lb-fade-enter-active {
+  transition: opacity 0.3s ease;
+}
+
+.lb-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.lb-fade-enter-from,
+.lb-fade-leave-to {
+  opacity: 0;
+}
 
 .lb-slide-left-enter-active,
 .lb-slide-left-leave-active,
@@ -376,8 +422,24 @@ onUnmounted(() => {
 .lb-slide-right-leave-active {
   transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.lb-slide-left-enter-from  { transform: translateX(48px); opacity: 0; }
-.lb-slide-left-leave-to    { transform: translateX(-48px); opacity: 0; }
-.lb-slide-right-enter-from { transform: translateX(-48px); opacity: 0; }
-.lb-slide-right-leave-to   { transform: translateX(48px); opacity: 0; }
+
+.lb-slide-left-enter-from {
+  transform: translateX(48px);
+  opacity: 0;
+}
+
+.lb-slide-left-leave-to {
+  transform: translateX(-48px);
+  opacity: 0;
+}
+
+.lb-slide-right-enter-from {
+  transform: translateX(-48px);
+  opacity: 0;
+}
+
+.lb-slide-right-leave-to {
+  transform: translateX(48px);
+  opacity: 0;
+}
 </style>
