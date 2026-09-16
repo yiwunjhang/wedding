@@ -20,8 +20,8 @@
             <div class="w-48 h-48 mx-auto rounded-full overflow-hidden shadow-xl ring-4 ring-offset-4"
               style="ring-color: #B1C97A">
               <div class="w-full h-full flex items-center justify-center" style="background: #B1C97A">
-                <img src="@/assets/images/leyin1.jpg" alt="新郎 Leyin" class="w-full h-full object-cover"
-                  style="transform: rotate(-25deg); transform-origin: center;" />
+                <img src="@/assets/images/leyin2.jpg" alt="新郎 Leyin" class="w-full h-full object-cover"
+                  style="transform: rotate(-0deg); transform-origin: center;" />
               </div>
             </div>
             <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-sm"
@@ -41,18 +41,18 @@
           <div class="relative inline-block mb-6">
             <div class="w-48 h-48 mx-auto rounded-full overflow-hidden shadow-xl ring-4 ring-offset-4"
               style="ring-color: #D4B87A">
-              <img src="@/assets/images/Risa3.jpg" alt="新娘 Risa" class="w-full h-full object-cover"
-                style="transform: rotate(-25deg); transform-origin: center;" />
+              <img src="@/assets/images/Risa4.jpg" alt="新娘 Risa" class="w-full h-full object-cover"
+                style="transform: rotate(20deg); transform-origin: center;" />
             </div>
             <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-sm"
               style="background:#D4B87A">新娘</div>
           </div>
           <h3 class="font-serif text-2xl mt-6 mb-2" style="color:#B1C97A">Risa（怡雯）</h3>
           <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">
-            一位熱愛畫畫的軟體工程師！<br />
+            一位熱愛畫畫的J人軟體工程師！<br />
             喜歡用色彩繽紛的畫筆描繪生活的美好<br />
             座右銘是「Enjoy every moment as it comes.」<br />
-            最近開始創作狐狸先生與小沙鼠的系列作品
+            <span class="text-xs text-gray-400">＊說不定你會在婚禮上某些地方看到她的畫作喔！</span>
           </p>
         </div>
       </div>
@@ -75,7 +75,10 @@
             :class="i % 2 === 0 ? 'md:mr-auto md:pr-12' : 'md:ml-auto md:pl-12'">
             <p class="text-xs tracking-widest font-medium mb-1" style="color:#D4B87A">{{ event.year }}</p>
             <h4 class="font-serif text-lg mb-2" style="color:#6E8F3C">{{ event.title }}</h4>
-            <p class="text-sm text-gray-500 leading-relaxed whitespace-pre-line">{{ event.desc }}</p>
+            <div class="text-sm text-gray-500 leading-relaxed">
+              <p v-for="(line, li) in event.desc.split('\n')" :key="li"
+                :class="isAside(line) ? 'text-xs text-gray-400' : ''">{{ line }}</p>
+            </div>
           </div>
           <!-- Dot -->
           <div
@@ -95,18 +98,21 @@
 import { SparklesIcon, HeartIcon, PaperAirplaneIcon, StarIcon } from '@heroicons/vue/24/outline'
 import PhotoCarousel from './PhotoCarousel.vue'
 
+// 補充說明（e.g. 開頭）用淺灰小字，避免搶走主要敘述的視覺重量
+const isAside = line => /^e\.g\./i.test(line.trim())
+
 const timeline = [
   {
     year: '2017 · 秋',
     title: '初次相遇',
-    desc: '怡雯畢業後第一份工作遇到剛好轉職來的宗毅，雖然此時還只是同事，但也因此展開了我們的故事。',
+    desc: '怡雯畢業後第一份工作剛好遇到了宗毅，雖然此時還只是同事，但也因此展開了我們的故事。',
     icon: SparklesIcon,
     photos: [],
   },
   {
     year: '2020 · 秋',
     title: '交往',
-    desc: '偶然的機緣讓兩人再度接線，慢慢開始到處約會旅遊更加認識彼此。',
+    desc: '偶然的機緣讓兩人更加認識，慢慢開始到處約會旅遊更加認識彼此。',
     icon: HeartIcon,
     photos: [],
   },

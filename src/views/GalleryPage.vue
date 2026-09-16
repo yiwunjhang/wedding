@@ -50,13 +50,13 @@
           <div ref="dateStrip" class="date-strip flex flex-row gap-2 overflow-x-auto py-1">
             <button ref="dateAllRef"
               class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
-              :style="activeDateTab === null ? 'background:#6E8F3C; color:#fff;' : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'"
-              @click="switchDateTab(null)">全部</button>
+              :style="dateTabStyle(null, false)" @click="switchDateTab(null)">全部</button>
             <button v-for="(dg, i) in currentGroup.dateGroups" :key="dg.date"
               :ref="el => { if (el) dateTabRefs[i] = el }" @click="switchDateTab(i)"
               class="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
-              :style="activeDateTab === i ? 'background:#6E8F3C; color:#fff;' : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'">{{
-              dg.date }}</button>
+              :style="dateTabStyle(i, dg.pending)">
+              {{ dg.date }}
+            </button>
           </div>
         </div>
 
@@ -65,17 +65,30 @@
           <div v-for="(row, ri) in dateRows" :key="ri" class="flex flex-wrap justify-center gap-2">
             <button v-for="item in row" :key="item.key" @click="switchDateTab(item.i)"
               class="px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
-              :style="activeDateTab === item.i ? 'background:#6E8F3C; color:#fff;' : 'background:rgba(110,143,60,0.1); color:#6E8F3C;'">{{
-              item.label }}</button>
+              :style="dateTabStyle(item.i, item.pending)">
+              {{ item.label }}
+            </button>
           </div>
         </div>
+
+        <!-- Legend -->
+        <p v-if="hasPendingDates" class="mt-3 text-center text-xs" style="color:rgba(110,143,60,0.7)">
+          虛線日期的照片仍在整理中，即將更新 ✦
+        </p>
 
       </div>
 
       <!-- Empty state -->
       <div v-if="currentPhotos.length === 0" class="flex flex-col items-center justify-center gap-3 py-32 text-center">
-        <PhotoIcon class="w-14 h-14 opacity-20" style="color:#4a3f2f" />
-        <p class="text-sm opacity-40" style="color:#4a3f2f">尚未加入照片</p>
+        <template v-if="currentPending">
+          <ClockIcon class="w-14 h-14 opacity-30" style="color:#6E8F3C" />
+          <p class="text-base font-medium" style="color:#6E8F3C">照片即將更新</p>
+          <p class="text-sm opacity-50" style="color:#4a3f2f">這天的照片還在整理中，敬請期待 ✦</p>
+        </template>
+        <template v-else>
+          <PhotoIcon class="w-14 h-14 opacity-20" style="color:#4a3f2f" />
+          <p class="text-sm opacity-40" style="color:#4a3f2f">尚未加入照片</p>
+        </template>
       </div>
 
       <template v-else>
@@ -190,7 +203,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import AOS from 'aos'
 import { RouterLink } from 'vue-router'
-import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon, PhotoIcon } from '@heroicons/vue/24/outline'
+import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon, PhotoIcon, ClockIcon } from '@heroicons/vue/24/outline'
 import NavBar from '../components/NavBar.vue'
 import LazyImg from '../components/LazyImg.vue'
 import { groups } from '@/data/photos.js'
@@ -229,9 +242,21 @@ function onImgLoad(src) {
 const currentGroup = computed(() => groups[activeTab.value])
 
 const dateItems = computed(() => [
-  { key: 'all', label: '全部', i: null },
-  ...currentGroup.value.dateGroups?.map((dg, i) => ({ key: dg.date, label: dg.date, i })) ?? []
+  { key: 'all', label: '全部', i: null, pending: false },
+  ...currentGroup.value.dateGroups?.map((dg, i) => ({ key: dg.date, label: dg.date, i, pending: dg.pending })) ?? []
 ])
+const hasPendingDates = computed(() => currentGroup.value.dateGroups?.some(dg => dg.pending) ?? false)
+
+function dateTabStyle(i, pending) {
+  if (activeDateTab.value === i) {
+    return pending
+      ? 'background:rgba(110,143,60,0.75); color:#fff; border:1px dashed rgba(255,255,255,0.75);'
+      : 'background:#6E8F3C; color:#fff; border:1px solid #6E8F3C;'
+  }
+  return pending
+    ? 'background:transparent; color:rgba(110,143,60,0.55); border:1px dashed rgba(110,143,60,0.45);'
+    : 'background:rgba(110,143,60,0.1); color:#6E8F3C; border:1px solid transparent;'
+}
 const dateRows = computed(() => {
   const rows = []
   for (let j = 0; j < dateItems.value.length; j += 5) {
@@ -245,6 +270,11 @@ const currentPhotos = computed(() => {
     return g.dateGroups[activeDateTab.value].photos
   }
   return g.photos
+})
+const currentPending = computed(() => {
+  const g = currentGroup.value
+  if (g.dateGroups?.length && activeDateTab.value !== null) return !!g.dateGroups[activeDateTab.value].pending
+  return false
 })
 const totalPages = computed(() => Math.ceil(currentPhotos.value.length / PER_PAGE))
 const pageStart = computed(() => currentPage.value * PER_PAGE)

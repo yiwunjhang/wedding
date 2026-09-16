@@ -44,8 +44,7 @@
       <!-- Quote -->
       <div data-aos="fade-up" data-aos-delay="300" class="max-w-md mx-auto mb-12">
         <p class="font-serif italic text-base leading-loose text-gray-400">
-          "婚姻就是把尋常的每一天，<br />
-          過成有你的樣子，一直到永遠。(´,,•ω•,,)♡"
+          "婚姻就是在尋常的生活中<br />渡過每一天都有彼此的樣子(´,,•ω•,,)♡"
         </p>
         
       </div>
